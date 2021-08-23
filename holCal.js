@@ -4,8 +4,8 @@ var parser = new DOMParser();
 var haDoc = parser.parseFromString(xmlFile, "text/xml");
 
 var haLength = haDoc.getElementsByTagName("customer").length;
-
-for 
-
-console.log(haDoc.getElementsByTagName("first_name")[0].firstChild.nodeValue);
 console.log(haLength);
+
+for (var i = 0; i < haLength; i++) {
+    console.log(haDoc.getElementsByTagName("first_name")[i].firstChild.nodeValue);
+}
