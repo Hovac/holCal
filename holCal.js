@@ -33,54 +33,55 @@ var renderDates = function () {
     }
 }
 
-var addDate = function(room) {
+var addDate = function (room) {
     rOverlay();
-
 
     console.log("add " + room.id);
 }
 
-var delDate = function(room) {
+var delDate = function (room) {
     console.log("delete " + room.id);
 }
 
-var rOverlay = function() {
+var rOverlay = function () {
+    var inputData = [];
     var overlaygnd = document.getElementById("overlaybgnd");
     overlaygnd.className = "overlayShow";
     var exitOlayBtn = document.getElementById("exitOlayBtn");
     exitOlayBtn.className = "exitOlayBtn";
-    exitOlayBtn.onclick = function() {
+    var inputBox = document.getElementById("inputBox");
+    inputBox.style.visibility = "visible";
+
+    var oSDate = document.getElementById("oSDate");
+    var oEDate = document.getElementById("oEDate");
+    var oNames = document.getElementById("oName");
+    var oPrice = document.getElementById("oPrice");
+
+    var oSaveBtn = document.getElementById("oSaveBtn");
+    var oCancelBtn = document.getElementById("oCancelBtn");
+
+    oCancelBtn.onclick = function () {
         overlaygnd.className = "overlayHide";
-        inputBox.remove();
+        inputBox.style.visibility = "hidden";
     }
 
-    var inputBox = document.createElement("div");
-    document.body.appendChild(inputBox);
-    inputBox.className = "oInputBoxShow";
+    exitOlayBtn.onclick = function () {
+        overlaygnd.className = "overlayHide";
+        inputBox.style.visibility = "hidden";
+    }
 
-    var oDates = document.createElement("div");
-    oDates.className = "oInputs";
-    inputBox.appendChild(oDates);
-    var oSDate = document.createElement("input");
-    var oEDate = document.createElement("input");
-    oSDate.type = "date";
-    oEDate.type = "date";
+    oSaveBtn.onclick = function () {
+        inputData[0] = oSDate.value;
+        inputData[1] = oEDate.value;
+        inputData[2] = oNames.value;
+        inputData[3] = oPrice.value;
+    }
 
-    oDates.appendChild(oSDate);
-    oDates.appendChild(oEDate);
+    colordayBoxes(inputData);
+}
 
-    var oNames = document.createElement("div");
-    oNames.className = "oInputs";
-    inputBox.appendChild(oNames);
-
-    var oPrice = document.createElement("div");
-    oPrice.className = "oInputs";
-    inputBox.appendChild(oPrice);
-
-    var oBtns = document.createElement("div");
-    oBtns.className = "oInputs";
-    inputBox.appendChild(oBtns);
-
+var colordayBoxes = function(iData) {
+    
 }
 
 var rMonths = function (mAxis, j) {
@@ -116,14 +117,14 @@ var rTitleButtons = function (mTitle, i, room) {
     var addButton = document.createElement("button");
     addButton.className = "btnClass btnClassAdd";
     addButton.innerHTML = "Dodaj rezervaciju";
-    addButton.onclick = function() {
+    addButton.onclick = function () {
         addDate(room);
     };
     mTitle.appendChild(addButton);
     var delButton = document.createElement("button");
     delButton.innerHTML = "izbriši rezervaciju";
     delButton.className = "btnClass btnClassDel";
-    delButton.onclick = function() {
+    delButton.onclick = function () {
         delDate(room);
     };
     mTitle.appendChild(delButton);
