@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: rgb(17, 68, 128);
+}
+
+.room1Floor {
+    display: block;
+    height: 300px;
+    width: 100%;
+    background-color: rgb(56, 120, 139);
+}
+
+.room2Floor {
+    display: block;
+    height: 200px;
+    width: 100%;
+    background-color: green;
+}
+
+.title {
+    background-color: rgb(22, 14, 70);
+    color: white;
+    display: flex;
+    flex-direction: row;
+    height: 15%;
+    width: 100%;
+    align-items: center;
+}
+
+.months {
+    display: flex;
+    height: 85%;
+    width: 100%;
+}
+
+.mAxis {
+    display: flexbox;
+    height: 100%;
+    width: 4%;
+    border-right: solid 2px;
+    border-color: black;
+}
+
+.mBoxes {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 96%;
+}
+
+.spacer {
+    height: 10px;
+}
+
+#initSpacer {
+    height: 30px;
+}
+
+.titleText {
+    display: flex;
+    padding-left: 4%;
+    flex: 0 0 20%;
+    font-size: 120%;
+}
+
+.button {
+    background-color: rgb(81, 184, 49);
+}
