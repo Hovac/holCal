@@ -34,6 +34,9 @@ var renderDates = function () {
 }
 
 var addDate = function(room) {
+    rOverlay();
+
+
     console.log("add " + room.id);
 }
 
@@ -41,12 +44,51 @@ var delDate = function(room) {
     console.log("delete " + room.id);
 }
 
+var rOverlay = function() {
+    var overlaygnd = document.getElementById("overlaybgnd");
+    overlaygnd.className = "overlayShow";
+    var exitOlayBtn = document.getElementById("exitOlayBtn");
+    exitOlayBtn.className = "exitOlayBtn";
+    exitOlayBtn.onclick = function() {
+        overlaygnd.className = "overlayHide";
+        inputBox.remove();
+    }
+
+    var inputBox = document.createElement("div");
+    document.body.appendChild(inputBox);
+    inputBox.className = "oInputBoxShow";
+
+    var oDates = document.createElement("div");
+    oDates.className = "oInputs";
+    inputBox.appendChild(oDates);
+    var oSDate = document.createElement("input");
+    var oEDate = document.createElement("input");
+    oSDate.type = "date";
+    oEDate.type = "date";
+
+    oDates.appendChild(oSDate);
+    oDates.appendChild(oEDate);
+
+    var oNames = document.createElement("div");
+    oNames.className = "oInputs";
+    inputBox.appendChild(oNames);
+
+    var oPrice = document.createElement("div");
+    oPrice.className = "oInputs";
+    inputBox.appendChild(oPrice);
+
+    var oBtns = document.createElement("div");
+    oBtns.className = "oInputs";
+    inputBox.appendChild(oBtns);
+
+}
+
 var rMonths = function (mAxis, j) {
     var divMonth = document.createElement("div");
     divMonth.className = "dMonth";
     divMonth.style.cssText = `height:${(100/(monthEnd-monthStart+1))-0.4}%;display:flex;flex-direction:column;justify-content:center;align-content:center;text-align:center;border-top:solid 1px;`;
     var monthNum = document.createElement("p");
-    monthNum.innerHTML = j;
+    monthNum.innerHTML = j + ".";
     monthNum.style.cssText = `font-size:120%;color:white`;
     divMonth.appendChild(monthNum);
     mAxis.appendChild(divMonth);
@@ -60,7 +102,7 @@ var rBoxes = function (mBoxes, j) {
     for (let i = 1; i <= dayInMonth[j]; i++) {
         var dayBox = document.createElement("div");
         dayBox.style.cssText = `height:100%;flex: 0 0 ${100/32}%;border-right:solid 1px;display:flex;background-color:white;justify-content:center;align-content:center;text-align:center;`;
-        dayBox.innerHTML = i;
+        dayBox.innerHTML = i + ".";
         dayBox.id = "dan_" + i;
         monthLine.appendChild(dayBox);
     }
@@ -72,7 +114,7 @@ var rTitleButtons = function (mTitle, i, room) {
     mTitleText.innerHTML = "Apartman A" + (i + 1);
     mTitle.appendChild(mTitleText);
     var addButton = document.createElement("button");
-    addButton.style.cssText = `height:60%;width:15%;flex:0 0 15%;margin: 0 20px;background-color:#54db39;border:none;`;
+    addButton.className = "btnClass btnClassAdd";
     addButton.innerHTML = "Dodaj rezervaciju";
     addButton.onclick = function() {
         addDate(room);
@@ -80,7 +122,7 @@ var rTitleButtons = function (mTitle, i, room) {
     mTitle.appendChild(addButton);
     var delButton = document.createElement("button");
     delButton.innerHTML = "izbriši rezervaciju";
-    delButton.style.cssText = `height:60%;width:15%;flex:0 0 15%;margin: 0 20px;background-color:#db3e39;border:none;`;
+    delButton.className = "btnClass btnClassDel";
     delButton.onclick = function() {
         delDate(room);
     };
