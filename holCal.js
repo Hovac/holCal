@@ -34,16 +34,15 @@ var renderDates = function () {
 }
 
 var addDate = function (room) {
-    rOverlay();
+    rOverlay(room);
 
-    console.log("add " + room.id);
 }
 
 var delDate = function (room) {
     console.log("delete " + room.id);
 }
 
-var rOverlay = function () {
+var rOverlay = function (room) {
     var inputData = [];
     var overlaygnd = document.getElementById("overlaybgnd");
     overlaygnd.className = "overlayShow";
@@ -63,11 +62,19 @@ var rOverlay = function () {
     oCancelBtn.onclick = function () {
         overlaygnd.className = "overlayHide";
         inputBox.style.visibility = "hidden";
+        oSDate.value = "";
+        oEDate.value = "";
+        oNames.value = "";
+        oPrice.value = "";
     }
 
     exitOlayBtn.onclick = function () {
         overlaygnd.className = "overlayHide";
         inputBox.style.visibility = "hidden";
+        oSDate.value = "";
+        oEDate.value = "";
+        oNames.value = "";
+        oPrice.value = "";
     }
 
     oSaveBtn.onclick = function () {
@@ -75,13 +82,45 @@ var rOverlay = function () {
         inputData[1] = oEDate.value;
         inputData[2] = oNames.value;
         inputData[3] = oPrice.value;
+        colordayBoxes(inputData, room);
+        overlaygnd.className = "overlayHide";
+        inputBox.style.visibility = "hidden";
+        oSDate.value = "";
+        oEDate.value = "";
+        oNames.value = "";
+        oPrice.value = "";
     }
-
-    colordayBoxes(inputData);
 }
 
-var colordayBoxes = function(iData) {
-    
+var colordayBoxes = function (iData, room) {
+    var tSDate = iData[0].split("-");
+    var tEDate = iData[1].split("-");
+    if (tSDate[1] == tEDate[1]) {
+        var tMonth = room.querySelector("#mjesec_" + parseInt(tSDate[1]));
+        var tempDayHolder = [];
+        for (let i = parseInt(tSDate[2]); i <= parseInt(tEDate[2]); i++) {
+            let j = 0;
+            console.log("#dan_" + i);
+            tempDayHolder[j] = tMonth.querySelector("#dan_" + i);
+            console.log(tempDayHolder[j]);
+            if (i == parseInt(tSDate[2])) {
+                tempDayHolder[j].className = "triangleBStart";
+            } else if (i == parseInt(tEDate[2])) {
+                tempDayHolder[j].className = "triangleBEnd";
+            } else {
+                tempDayHolder[j].style.backgroundColor = "#00FF00";
+            }
+            j++
+        }
+        var tStartDay = tMonth.querySelector("#dan_" + parseInt(tSDate[2]));
+        var tEndDay = tMonth.querySelector("#dan_" + parseInt(tEDate[2]));
+
+        console.log(tMonth, tStartDay, tEndDay);
+
+    } else {
+        alert("Mora se unijeti mjesec po mjesec, ne mogu između!");
+    }
+    console.log(tSDate, tEDate);
 }
 
 var rMonths = function (mAxis, j) {

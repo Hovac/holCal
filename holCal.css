@@ -216,3 +216,11 @@ body {
     border: none;
     color: white;
 }
+
+.triangleBStart {
+    background: linear-gradient(to bottom right, rgba(0,0,0,0) 50%, rgba(0, 255, 0,1) 50%)
+}
+
+.triangleBEnd {
+    background: linear-gradient(to bottom right, rgba(0, 255, 0,1) 50%, rgba(0,0,0,0) 50%)
+}
