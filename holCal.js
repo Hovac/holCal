@@ -1,5 +1,13 @@
 var xmlFile = '<reservations><reservation><customer><first_name>hovac</first_name><last_name>ovac</last_name></customer><date>2015-03-29</date><id>325070178</id><room><arrival_date>2015-02-20</arrival_date><currencycode>INR</currencycode><departure_date>2015-02-22</departure_date><id>37568001</id><meal_plan>Breakfast costs INR 15.00 per person per      night.</meal_plan><numberofguests>7</numberofguests><price date="2015-02-20" rate_id="1354450">350</price><price date="2015-02-21" rate_id="1354450">350</price><roomreservation_id>1799964999</roomreservation_id><totalprice>700</totalprice></room><time>20:51:09</time></reservation><reservation><customer><first_name>test</first_name><last_name>test</last_name></customer><date>2015-03-29</date><id>438151297</id><room><arrival_date>2015-02-20</arrival_date><currencycode>INR</currencycode><departure_date>2015-02-21</departure_date><id>37568001</id><meal_plan>Breakfast costs INR 15.00 per person per night.</meal_plan><numberofguests>7</numberofguests><price date="2015-02-20" rate_id="1354450">350</price><roomreservation_id>1799964999</roomreservation_id><totalprice>350</totalprice></room><time>20:51:09</time></reservation></reservations>'
 
+/*
+    TODO: 
+    - Implement information on clicked dates, or even better span element over all dates taken up by 1 entry
+    - count*n* incrementation in addDate() and delDate()
+    - possibility of booking.com admin site scrape?
+    - if hosted on website, possible node.js save/load file directly on file system. further discussion needed.
+*/
+
 var lStor = window.localStorage;
 var floor1rooms = document.getElementsByClassName("room1Floor");
 var floor2rooms = document.getElementsByClassName("room2Floor");
@@ -34,6 +42,9 @@ var renderDates = function () {
 }
 
 var loadLocalStorage = function () {
+    /*
+    First iterates by all apartments. after that iterates by the count*n* which will be incremeneted in every addDate() and decremented in every delDate(). watch which apartment is being incremented or decremented.
+     */
     lStor.setItem("arrival00", "2021-10-01");
     lStor.setItem("departure00", "2021-10-06");
     lStor.setItem("arrival01", "2021-10-10");
