@@ -11,7 +11,12 @@ var xmlFile = '<reservations><reservation><customer><first_name>hovac</first_nam
 var lStor = window.localStorage;
 var floor1rooms = document.getElementsByClassName("room1Floor");
 var floor2rooms = document.getElementsByClassName("room2Floor");
-
+var count = 0;
+/*
+    fuck javascript and fuck everything about this language. whoever thought of javascript should burn
+    loadLocalStorage floor1rooms won't send HTML elements as parameter if there isn't 
+*/
+console.log(floor1rooms);
 
 // Global Variables //
 var monthStart = 6;
@@ -25,12 +30,12 @@ var haLength = haDoc.getElementsByTagName("customer").length;
 
 var renderDates = function () {
     var mAxis;
+
     // months write number
     for (let i = 0; i < floor1rooms.length; i++) {
         mAxis = floor1rooms[i].getElementsByClassName("months")[0].getElementsByClassName("mAxis")[0];
         mBoxes = floor1rooms[i].getElementsByClassName("months")[0].getElementsByClassName("mBoxes")[0];
         var mTitle = floor1rooms[i].getElementsByClassName("title")[0];
-
         rTitleButtons(mTitle, i, floor1rooms[i]);
 
         for (let j = monthStart; j <= monthEnd; j++) {
@@ -38,35 +43,21 @@ var renderDates = function () {
             rBoxes(mBoxes, j);
         }
     }
-    loadLocalStorage();
+    loadLocalStorage(floor1rooms);
 }
 
-var loadLocalStorage = function () {
+var loadLocalStorage = function (floor1rooms) {
     /*
     First iterates by all apartments. after that iterates by the count*n* which will be incremeneted in every addDate() and decremented in every delDate(). watch which apartment is being incremented or decremented.
      */
-    lStor.setItem("arrival00", "2021-10-01");
-    lStor.setItem("departure00", "2021-10-06");
-    lStor.setItem("arrival01", "2021-10-10");
-    lStor.setItem("departure01", "2021-10-16");
-    lStor.setItem("count0", "2");
-
-    lStor.setItem("arrival10", "2021-10-04");
-    lStor.setItem("departure10", "2021-10-08");
-    lStor.setItem("arrival11", "2021-10-9");
-    lStor.setItem("departure11", "2021-10-25");
-    lStor.setItem("count1", "2");
     var inputData = [];
-    console.log(lStor);
     for (var i = 0; i < floor1rooms.length; i++) {
-        console.log("i: " + i);
         for (var j = 0; j < lStor.getItem("count" + i); j++) {
-            console.log("j; "+ j);
             inputData[0] = lStor.getItem("arrival" + i + j);
             inputData[1] = lStor.getItem("departure" + i + j);
-            inputData[2] = "jebise";
-            inputData[3] = 123;
-            colordayBoxes(inputData, document.getElementsByClassName("room1Floor")[i]);
+            inputData[2] = lStor.getItem("name" + i + j);
+            inputData[3] = lStor.getItem("price" + i + j);
+            colorDayBoxes(inputData, floor1rooms[i]);
         }
     }
 }
@@ -119,8 +110,17 @@ var rOverlay = function (room) {
         inputData[1] = oEDate.value;
         inputData[2] = oNames.value;
         inputData[3] = oPrice.value;
-        console.log(inputData);
-        colordayBoxes(inputData, room);
+        var apNum = parseInt(room.id.substring(1)) - 1;
+        count = (lStor.getItem("count" + apNum) !== null) ? parseInt(lStor.getItem("count" + apNum)) : 0;
+        lStor.setItem("arrival" + apNum + count, inputData[0]);
+        lStor.setItem("departure" + apNum + count, inputData[1]);
+        lStor.setItem("name" + apNum + count, inputData[2]);
+        lStor.setItem("price" + apNum + count, inputData[3]);
+        count += 1;
+        lStor.setItem("count" + apNum, count);
+
+        console.log(lStor, count);
+        colorDayBoxes(inputData, room);
         overlaygnd.className = "overlayHide";
         inputBox.style.visibility = "hidden";
         oSDate.value = "";
@@ -140,7 +140,8 @@ var rOverlay = function (room) {
 //     URL.revokeObjectURL(a.href);
 // }
 
-var colordayBoxes = function (iData, room) {
+var colorDayBoxes = function (iData, room) {
+    console.log(iData, room);
     var tSDate = iData[0].split("-");
     var tEDate = iData[1].split("-");
     if (tSDate[1] == tEDate[1]) {
@@ -160,7 +161,6 @@ var colordayBoxes = function (iData, room) {
         }
         var tStartDay = tMonth.querySelector("#dan_" + parseInt(tSDate[2]));
         var tEndDay = tMonth.querySelector("#dan_" + parseInt(tEDate[2]));
-
 
     } else {
         alert("Mora se unijeti mjesec po mjesec, ne mogu između!");

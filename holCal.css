@@ -4,15 +4,28 @@
     overflow-x: hidden;
 }
 
+body::-webkit-scrollbar {
+    width: 0.8em;
+  }
+   
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  body::-webkit-scrollbar-thumb {
+    background-color: rgb(211, 85, 81);
+    outline: 1px solid slategrey;
+  }
+
 body {
-    background-color: rgb(17, 68, 128);
+    background-color: rgb(56, 120, 139);
 }
 
 .room1Floor {
     display: block;
     height: 300px;
     width: 100%;
-    background-color: rgb(56, 120, 139);
+    background-color: rgb(56, 64, 139);
 }
 
 .room2Floor {
