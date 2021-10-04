@@ -1,5 +1,10 @@
 var xmlFile = '<reservations><reservation><customer><first_name>hovac</first_name><last_name>ovac</last_name></customer><date>2015-03-29</date><id>325070178</id><room><arrival_date>2015-02-20</arrival_date><currencycode>INR</currencycode><departure_date>2015-02-22</departure_date><id>37568001</id><meal_plan>Breakfast costs INR 15.00 per person per      night.</meal_plan><numberofguests>7</numberofguests><price date="2015-02-20" rate_id="1354450">350</price><price date="2015-02-21" rate_id="1354450">350</price><roomreservation_id>1799964999</roomreservation_id><totalprice>700</totalprice></room><time>20:51:09</time></reservation><reservation><customer><first_name>test</first_name><last_name>test</last_name></customer><date>2015-03-29</date><id>438151297</id><room><arrival_date>2015-02-20</arrival_date><currencycode>INR</currencycode><departure_date>2015-02-21</departure_date><id>37568001</id><meal_plan>Breakfast costs INR 15.00 per person per night.</meal_plan><numberofguests>7</numberofguests><price date="2015-02-20" rate_id="1354450">350</price><roomreservation_id>1799964999</roomreservation_id><totalprice>350</totalprice></room><time>20:51:09</time></reservation></reservations>'
 
+var lStor = window.localStorage;
+var floor1rooms = document.getElementsByClassName("room1Floor");
+var floor2rooms = document.getElementsByClassName("room2Floor");
+
+
 // Global Variables //
 var monthStart = 6;
 var monthEnd = 10;
@@ -10,13 +15,7 @@ var haDoc = parser.parseFromString(xmlFile, "text/xml");
 
 var haLength = haDoc.getElementsByTagName("customer").length;
 
-for (var i = 0; i < haLength; i++) {
-    console.log(haDoc.getElementsByTagName("first_name")[i].firstChild.nodeValue);
-}
-
 var renderDates = function () {
-    var floor1rooms = document.getElementsByClassName("room1Floor");
-    var floor2rooms = document.getElementsByClassName("room2Floor");
     var mAxis;
     // months write number
     for (let i = 0; i < floor1rooms.length; i++) {
@@ -31,11 +30,38 @@ var renderDates = function () {
             rBoxes(mBoxes, j);
         }
     }
+    loadLocalStorage();
+}
+
+var loadLocalStorage = function () {
+    lStor.setItem("arrival00", "2021-10-01");
+    lStor.setItem("departure00", "2021-10-06");
+    lStor.setItem("arrival01", "2021-10-10");
+    lStor.setItem("departure01", "2021-10-16");
+    lStor.setItem("count0", "2");
+
+    lStor.setItem("arrival10", "2021-10-04");
+    lStor.setItem("departure10", "2021-10-08");
+    lStor.setItem("arrival11", "2021-10-9");
+    lStor.setItem("departure11", "2021-10-25");
+    lStor.setItem("count1", "2");
+    var inputData = [];
+    console.log(lStor);
+    for (var i = 0; i < floor1rooms.length; i++) {
+        console.log("i: " + i);
+        for (var j = 0; j < lStor.getItem("count" + i); j++) {
+            console.log("j; "+ j);
+            inputData[0] = lStor.getItem("arrival" + i + j);
+            inputData[1] = lStor.getItem("departure" + i + j);
+            inputData[2] = "jebise";
+            inputData[3] = 123;
+            colordayBoxes(inputData, document.getElementsByClassName("room1Floor")[i]);
+        }
+    }
 }
 
 var addDate = function (room) {
     rOverlay(room);
-
 }
 
 var delDate = function (room) {
@@ -82,6 +108,7 @@ var rOverlay = function (room) {
         inputData[1] = oEDate.value;
         inputData[2] = oNames.value;
         inputData[3] = oPrice.value;
+        console.log(inputData);
         colordayBoxes(inputData, room);
         overlaygnd.className = "overlayHide";
         inputBox.style.visibility = "hidden";
@@ -89,8 +116,18 @@ var rOverlay = function (room) {
         oEDate.value = "";
         oNames.value = "";
         oPrice.value = "";
+        // download(jsonData, "jsonTest.text", "text/plain");
     }
 }
+
+// var download = function(content, fileName, contentType) {
+//     var a = document.createElement("a");
+//     var file = new Blob([JSON.stringify(content)], {type: contentType});
+//     a.href = URL.createObjectURL(file);
+//     a.download = fileName;
+//     a.click();
+//     URL.revokeObjectURL(a.href);
+// }
 
 var colordayBoxes = function (iData, room) {
     var tSDate = iData[0].split("-");
@@ -100,9 +137,7 @@ var colordayBoxes = function (iData, room) {
         var tempDayHolder = [];
         for (let i = parseInt(tSDate[2]); i <= parseInt(tEDate[2]); i++) {
             let j = 0;
-            console.log("#dan_" + i);
             tempDayHolder[j] = tMonth.querySelector("#dan_" + i);
-            console.log(tempDayHolder[j]);
             if (i == parseInt(tSDate[2])) {
                 tempDayHolder[j].className = "triangleBStart";
             } else if (i == parseInt(tEDate[2])) {
@@ -115,12 +150,10 @@ var colordayBoxes = function (iData, room) {
         var tStartDay = tMonth.querySelector("#dan_" + parseInt(tSDate[2]));
         var tEndDay = tMonth.querySelector("#dan_" + parseInt(tEDate[2]));
 
-        console.log(tMonth, tStartDay, tEndDay);
 
     } else {
         alert("Mora se unijeti mjesec po mjesec, ne mogu između!");
     }
-    console.log(tSDate, tEDate);
 }
 
 var rMonths = function (mAxis, j) {
@@ -168,7 +201,5 @@ var rTitleButtons = function (mTitle, i, room) {
     };
     mTitle.appendChild(delButton);
 }
-
-
 
 renderDates();
