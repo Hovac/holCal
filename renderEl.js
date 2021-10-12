@@ -4,10 +4,26 @@ class Renderer {
 
     createTooltip(day, name, price) {
         var tSpan = document.createElement("span");
-        tSpan.innerHTML += "ime: " + name + "\n" + "cijena/noć: " + price;
+        tSpan.innerHTML += "ime: " + name + " cijena/noć: " + price;
         tSpan.className = "tooltiptext";
         day.classList.add("tooltip");
         day.appendChild(tSpan);
+        var triangleDiv = document.createElement("div");
+        triangleDiv.className = "trianglePointer";
+        day.appendChild(triangleDiv);
+    }
+
+    doubleTooltip(day, name, price, comeNgo) {
+        var spanText = day.children[0].innerHTML;
+        var oldPrice = spanText.split(" ")[3];
+        var oldName = spanText.split(" ")[1];
+        if (comeNgo == "arrival") {
+            var doubleText = "ODLAZAK:</br>Ime:" + oldName + "</br>Cijena: " + oldPrice + "</br>DOLAZAK:</br>Ime: " + name + "</br>Cijena: " + price;
+        } else if (comeNgo == "departure") {
+            var doubleText = "ODLAZAK:</br>Ime:" + name + "</br>Cijena: " + price + "</br>DOLAZAK:</br>Ime: " + oldName + "</br>Cijena: " + oldPrice;
+        }
+        day.children[0].innerHTML = doubleText;
+        day.children[0].style.marginTop = "-141px";
     }
 
     Months(mAxis, j) {

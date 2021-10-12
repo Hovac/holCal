@@ -43,9 +43,7 @@ var renderDates = function () {
     }
     var cList = lData.initLoad(floor1rooms).clients;
     var cDate = lData.initLoad(floor1rooms).rooms;
-    console.log(cList);
-    console.log(cDate);
-    for(var i = 0; i < cList.length; i++) {
+    for (var i = 0; i < cList.length; i++) {
         colorDayBoxes(cList[i], cDate[i]);
     }
 }
@@ -124,7 +122,7 @@ var colorDayBoxes = function (iData, room) {
             tempDayHolder[j] = tMonth.querySelector("#dan_" + i);
             if (i == parseInt(tSDate[2])) {
                 // color the start triangle while taking care of dates before it
-                clr.cDayBefore = "rgba(0, 0, 0, 0)"
+                clr.cDayBefore = "rgba(0, 0, 0, 0) 30%"
                 if (tempDayHolder[j].style.backgroundImage) {
                     /*
                     if there is a colored date before the start date of this entry,
@@ -135,10 +133,15 @@ var colorDayBoxes = function (iData, room) {
                 }
                 var eGradRGB = clr.rndColString(randomColor);
                 clr.setGradient(tempDayHolder[j], clr.cDayBefore, eGradRGB);
-                clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
+
+                if (tempDayHolder[j].children.length < 2) {
+                    clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
+                } else {
+                    clr.doubleTooltip(tempDayHolder[j], iData[2], iData[3], "arrival");
+                }
             } else if (i == parseInt(tEDate[2])) {
                 // color the end triangle taking care of dates after it
-                clr.cDayAfter = "rgba(0, 0, 0, 0)";
+                clr.cDayAfter = "rgba(0, 0, 0, 0) 70%";
                 if (tempDayHolder[j].style.backgroundImage) {
                     /*
                     if there is a colored date after the end date of this entry,
@@ -149,11 +152,18 @@ var colorDayBoxes = function (iData, room) {
                 }
                 var eGradRGB = clr.rndColString(randomColor);
                 clr.setGradient(tempDayHolder[j], eGradRGB, clr.cDayAfter);
-                clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
+
+                if (tempDayHolder[j].children.length < 2) {
+                    clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
+                } else {
+                    clr.doubleTooltip(tempDayHolder[j], iData[2], iData[3], "departure");
+                }
             } else {
                 // color the whole box
-                tempDayHolder[j].style.backgroundColor = "#" + randomColor;
-                clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
+                if (tempDayHolder[j].children.length <= 2) {
+                    tempDayHolder[j].style.backgroundColor = "#" + randomColor;
+                    clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
+                }
             }
             j++
         }
