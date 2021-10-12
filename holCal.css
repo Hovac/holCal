@@ -6,16 +6,16 @@
 
 body::-webkit-scrollbar {
     width: 0.8em;
-  }
-   
-  body::-webkit-scrollbar-track {
+}
+
+body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-   
-  body::-webkit-scrollbar-thumb {
+}
+
+body::-webkit-scrollbar-thumb {
     background-color: rgb(211, 85, 81);
     outline: 1px solid slategrey;
-  }
+}
 
 body {
     background-color: rgb(56, 120, 139);
@@ -71,7 +71,14 @@ body {
 }
 
 #initSpacer {
-    height: 30px;
+    height: 50px;
+}
+
+#clearDataBtn {
+    position: relative;
+    background-color: rgb(196, 115, 49);
+    top: 10px;
+    left: 80%;
 }
 
 .titleText {
@@ -82,19 +89,19 @@ body {
 }
 
 .btnClass {
-    height:60%;
-    width:15%;
-    flex:0 0 15%;
+    height: 60%;
+    width: 15%;
+    flex: 0 0 15%;
     margin: 0 20px;
-    background-color:#1b811b;
+    background-color: #1b811b;
     color: white;
-    border:none;
-    cursor:pointer;
+    border: none;
+    cursor: pointer;
     transition: 333ms;
 }
 
 .btnClassDel {
-    background-color:#7c0e0a;
+    background-color: #7c0e0a;
     transition: 333ms;
 }
 
@@ -109,13 +116,13 @@ body {
 }
 
 .overlayShow {
-    height:100vh;
-    width:100vw;
+    height: 100vh;
+    width: 100vw;
     background: rgba(0, 0, 0, 0.75);
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500;
     visibility: visible;
     transition: 333ms;
 }
@@ -136,7 +143,8 @@ body {
     position: fixed;
     display: block;
     top: 20px;
-    right: 20px;;
+    right: 20px;
+    ;
     height: 100px;
     width: 100px;
     overflow: hidden;
@@ -159,15 +167,15 @@ body {
 }
 
 .oInputBox {
-    height:60%;
-    width:40%;
-    top:20%;
-    left:30%;
+    height: 60%;
+    width: 40%;
+    top: 20%;
+    left: 30%;
     background: rgb(45, 87, 110);
-    z-index:505;
-    position:fixed;
-    display:flex;
-    flex-direction:column;
+    z-index: 505;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
 }
 
 .boxPart {
@@ -188,7 +196,7 @@ body {
 }
 
 .boxPartBtns {
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: center;
 }
 
@@ -230,10 +238,17 @@ body {
     color: white;
 }
 
-.triangleBStart {
-    background: linear-gradient(to bottom right, rgba(0,0,0,0) 50%, rgba(0, 255, 0,1) 50%)
+.tooltiptext {
+    display: none;
+    background: #b8b8b8;
+    margin-top: -40px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1000;
+    /*width: 100px;
+    height: 40px;*/
 }
 
-.triangleBEnd {
-    background: linear-gradient(to bottom right, rgba(0, 255, 0,1) 50%, rgba(0,0,0,0) 50%)
+.tooltip:hover .tooltiptext {
+    display: block;
 }
