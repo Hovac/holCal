@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="holCal.css" rel="stylesheet">
+</head>
+
+<body>
+    <div style="z-index: 1;">
+        <div id="initSpacer">
+            <button class="btnClass" id="clearDataBtn" onclick="removeLocalStorage()">izbriši podatke</button>
+        </div>
+        <div id="a1" class="room1Floor">
+            <div class="title">
+            </div>
+            <div class="months">
+                <div class="mAxis">
+
+                </div>
+                <div class="mBoxes">
+
+                </div>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div id="a2" class="room1Floor">
+            <div class="title">
+
+            </div>
+            <div class="months">
+                <div class="mAxis">
+
+                </div>
+                <div class="mBoxes">
+
+                </div>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div id="a3" class="room1Floor">
+            <div class="title">
+
+            </div>
+            <div class="months">
+                <div class="mAxis">
+
+                </div>
+                <div class="mBoxes">
+
+                </div>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div id="a4" class="room1Floor">
+            <div class="title">
+
+            </div>
+            <div class="months">
+                <div class="mAxis">
+
+                </div>
+                <div class="mBoxes">
+
+                </div>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div id="a5" class="room2Floor">
+            <div class="title">
+
+            </div>
+            <div class="months">
+                <div class="mAxis">
+
+                </div>
+                <div class="mBoxes">
+
+                </div>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div id="a6" class="room2Floor">
+            <div class="title">
+
+            </div>
+            <div class="months">
+                <div class="mAxis">
+
+                </div>
+                <div class="mBoxes">
+
+                </div>
+            </div>
+        </div>
+        <div class="spacer"></div>
+    </div>
+    <div id="overlaybgnd" class="overlayHide">
+        <button id="exitOlayBtn"></button>
+        <div id="inputBox" class="oInputBox">
+            <div class="boxPart boxPartDate">
+                <div class="boxODate">
+                    <label for="oSDate">Dolazak*</label>
+                    <input type="date" class="oInput" id="oSDate">
+                </div>
+                <div class="boxODate">
+                    <label for="oEDate">Odlazak*</label>
+                    <input type="date" class="oInput" id="oEDate">
+                </div>
+            </div>
+            <div class="boxPart">
+                <label for="oName">Ime i prezime*</label>
+                <input type="text" class="oInput" id="oName">
+            </div>
+            <div class="boxPart">
+                <label for="oPrice">Cijena noćenja</label>
+                <input type="number" class="oInput" id="oPrice" placeholder="150€/noć">
+            </div>
+            <div class="boxPart boxPartBtns">
+                <button id="oSaveBtn" class="oBtns">Spremi</button>
+                <button id="oCancelBtn" class="oBtns">Odustani</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderEl.js"></script>
+    <script src="lStorage.js"></script>
+    <script src="holCal.js"></script>
+</body>
+
+</html>

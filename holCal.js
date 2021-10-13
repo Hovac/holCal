@@ -86,13 +86,14 @@ var rOverlay = function (room) {
             if(lData.checkDate(inputData[0], inputData[1], room)) {
                 lData.save(inputData, room);
                 colorDayBoxes(inputData, room);
+                clr.clearOlay();
             } else {
                 alert("Ne može se upisati datum ako je taj datum već zauzet");
+                clr.clearOlay();
             }
         } else {
-            alert("moraš")
+            alert("moraš upisati datume");
         }
-        clr.clearOlay();
     }
 }
 
