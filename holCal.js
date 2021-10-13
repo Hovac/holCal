@@ -6,8 +6,10 @@ var xmlFile = '<reservations><reservation><customer><first_name>hovac</first_nam
     - count*n* incrementation in addDate() and delDate() - DONE
     - possibility of booking.com admin site scrape?
     - if hosted on website, possible node.js save/load file directly on file system. further discussion needed.
-    - add triangle shit on end date (currently implemented on start date and works good if user inputs date in ascending order) - DONE DEBUG NEEDED
-    - add check if date is trying to be added to existing period of time
+    - add triangle shit on end date (currently implemented on start date and works good if user inputs date in ascending order) - PARTIAL DEBUG NEEDED
+    - add check if date is trying to be added to existing period of time - DONE
+    - add dates between months
+    - limit max years away
 */
 
 var lData = new localData();
