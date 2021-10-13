@@ -1,6 +1,17 @@
 class Renderer {
     cDayBefore = "rgba(0, 0, 0, 0)";
     cDayAfter = "rgba(0, 0, 0, 0)";
+    overlaygnd;
+    exitOlayBtn;
+    inputBox;
+
+    oSDate;
+    oEDate;
+    oNames;
+    oPrice;
+
+    oSaveBtn;
+    oCancelBtn;
 
     createTooltip(day, name, price) {
         var tSpan = document.createElement("span");
@@ -70,6 +81,34 @@ class Renderer {
             delDate(room);
         };
         mTitle.appendChild(delButton);
+    }
+
+    overlayFnc() {
+        this.overlaygnd = document.getElementById("overlaybgnd");
+        this.overlaygnd.className = "overlayShow";
+        this.exitOlayBtn = document.getElementById("exitOlayBtn");
+        this.exitOlayBtn.className = "exitOlayBtn";
+        this.inputBox = document.getElementById("inputBox");
+        this.inputBox.style.visibility = "visible";
+
+        this.oSDate = document.getElementById("oSDate");
+        this.oEDate = document.getElementById("oEDate");
+        this.oNames = document.getElementById("oName");
+        this.oPrice = document.getElementById("oPrice");
+
+        this.oSaveBtn = document.getElementById("oSaveBtn");
+        this.oCancelBtn = document.getElementById("oCancelBtn");
+
+        return this
+    }
+
+    clearOlay() {
+        this.overlaygnd.className = "overlayHide";
+        this.inputBox.style.visibility = "hidden";
+        this.oSDate.value = "";
+        this.oEDate.value = "";
+        this.oNames.value = "";
+        this.oPrice.value = "";
     }
 
     colFromCSS(strColor, day) {

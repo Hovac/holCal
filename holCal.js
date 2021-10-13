@@ -6,7 +6,8 @@ var xmlFile = '<reservations><reservation><customer><first_name>hovac</first_nam
     - count*n* incrementation in addDate() and delDate() - DONE
     - possibility of booking.com admin site scrape?
     - if hosted on website, possible node.js save/load file directly on file system. further discussion needed.
-    - add triangle shit on end date (currently implemented on start date and works good if user inputs date in ascending order)
+    - add triangle shit on end date (currently implemented on start date and works good if user inputs date in ascending order) - DONE DEBUG NEEDED
+    - add check if date is trying to be added to existing period of time
 */
 
 var lData = new localData();
@@ -41,10 +42,10 @@ var renderDates = function () {
             clr.Boxes(mBoxes, j);
         }
     }
-    var cList = lData.initLoad(floor1rooms).clients;
-    var cDate = lData.initLoad(floor1rooms).rooms;
-    for (var i = 0; i < cList.length; i++) {
-        colorDayBoxes(cList[i], cDate[i]);
+
+    var data = lData.initLoad(floor1rooms);
+    for (var i = 0; i < data.clients.length; i++) {
+        colorDayBoxes(data.clients[i], data.rooms[i]);
     }
 }
 
@@ -58,37 +59,22 @@ var delDate = function (room) {
 
 var rOverlay = function (room) {
     var inputData = [];
-    var overlaygnd = document.getElementById("overlaybgnd");
-    overlaygnd.className = "overlayShow";
-    var exitOlayBtn = document.getElementById("exitOlayBtn");
-    exitOlayBtn.className = "exitOlayBtn";
-    var inputBox = document.getElementById("inputBox");
-    inputBox.style.visibility = "visible";
+    var exitOlayBtn = clr.overlayFnc().exitOlayBtn;
 
-    var oSDate = document.getElementById("oSDate");
-    var oEDate = document.getElementById("oEDate");
-    var oNames = document.getElementById("oName");
-    var oPrice = document.getElementById("oPrice");
+    var oSDate = clr.overlayFnc().oSDate;
+    var oEDate = clr.overlayFnc().oEDate;
+    var oNames = clr.overlayFnc().oNames;
+    var oPrice = clr.overlayFnc().oPrice;
 
-    var oSaveBtn = document.getElementById("oSaveBtn");
-    var oCancelBtn = document.getElementById("oCancelBtn");
+    var oSaveBtn = clr.overlayFnc().oSaveBtn;
+    var oCancelBtn = clr.overlayFnc().oCancelBtn;
 
     oCancelBtn.onclick = function () {
-        overlaygnd.className = "overlayHide";
-        inputBox.style.visibility = "hidden";
-        oSDate.value = "";
-        oEDate.value = "";
-        oNames.value = "";
-        oPrice.value = "";
+        clr.clearOlay();
     }
 
     exitOlayBtn.onclick = function () {
-        overlaygnd.className = "overlayHide";
-        inputBox.style.visibility = "hidden";
-        oSDate.value = "";
-        oEDate.value = "";
-        oNames.value = "";
-        oPrice.value = "";
+        clr.clearOlay();
     }
 
     oSaveBtn.onclick = function () {
@@ -96,16 +82,13 @@ var rOverlay = function (room) {
         inputData[1] = oEDate.value;
         inputData[2] = oNames.value;
         inputData[3] = oPrice.value;
-        lData.save(inputData, room);
-
-        colorDayBoxes(inputData, room);
-        overlaygnd.className = "overlayHide";
-        inputBox.style.visibility = "hidden";
-        oSDate.value = "";
-        oEDate.value = "";
-        oNames.value = "";
-        oPrice.value = "";
-        // download(jsonData, "jsonTest.text", "text/plain");
+        if(lData.checkDate(inputData[0], inputData[1])) {
+            lData.save(inputData, room);
+            colorDayBoxes(inputData, room);
+        } else {
+            alert("Ne može se upisati datum ako je taj datum već zauzet");
+        }
+        clr.clearOlay();
     }
 }
 
@@ -133,7 +116,8 @@ var colorDayBoxes = function (iData, room) {
                 }
                 var eGradRGB = clr.rndColString(randomColor);
                 clr.setGradient(tempDayHolder[j], clr.cDayBefore, eGradRGB);
-
+                
+                // double tooltip bugfix
                 if (tempDayHolder[j].children.length < 2) {
                     clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
                 } else {
@@ -153,6 +137,7 @@ var colorDayBoxes = function (iData, room) {
                 var eGradRGB = clr.rndColString(randomColor);
                 clr.setGradient(tempDayHolder[j], eGradRGB, clr.cDayAfter);
 
+                // double tooltip bugfix
                 if (tempDayHolder[j].children.length < 2) {
                     clr.createTooltip(tempDayHolder[j], iData[2], iData[3]);
                 } else {

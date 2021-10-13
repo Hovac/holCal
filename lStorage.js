@@ -1,5 +1,8 @@
 var lStor = window.localStorage;
 class localData {
+    sDates = [];
+    eDates = [];
+
     save(inputData, room) {
         var apNum = parseInt(room.id.substring(1)) - 1;
         count = (lStor.getItem("count" + apNum) !== null) ? parseInt(lStor.getItem("count" + apNum)) : 0;
@@ -25,6 +28,8 @@ class localData {
                 inputData[1] = lStor.getItem("departure" + i + j);
                 inputData[2] = lStor.getItem("name" + i + j);
                 inputData[3] = lStor.getItem("price" + i + j);
+                this.sDates.push(inputData[0]);
+                this.eDates.push(inputData[1]);
                 
                 clients.push(inputData);
                 rooms.push(floor1rooms[i]);
@@ -60,5 +65,25 @@ class localData {
         a.download = fileName;
         a.click();
         URL.revokeObjectURL(a.href);
+    }
+
+    checkDate(startDate, endDate) {
+        var dateFlag = true;
+        for(var i = 0; i < this.sDates.length; i++) {
+            var start1 = Date.parse(startDate);
+            var start2 = Date.parse(this.sDates[i]);
+            var end1 = Date.parse(endDate);
+            var end2 = Date.parse(this.eDates[i]);
+            var startInside = ((start1 > start2) & (start1 < end2));
+            var endInside = ((end1 < end2) & (end1 > start2));
+            if(startInside || endInside) {
+                dateFlag = false;
+                break;
+            } else {
+                dateFlag = true;
+            }
+        }
+
+        return dateFlag;
     }
 }
