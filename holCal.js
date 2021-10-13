@@ -82,11 +82,15 @@ var rOverlay = function (room) {
         inputData[1] = oEDate.value;
         inputData[2] = oNames.value;
         inputData[3] = oPrice.value;
-        if(lData.checkDate(inputData[0], inputData[1])) {
-            lData.save(inputData, room);
-            colorDayBoxes(inputData, room);
+        if(oSDate.value && oEDate.value) {
+            if(lData.checkDate(inputData[0], inputData[1], room)) {
+                lData.save(inputData, room);
+                colorDayBoxes(inputData, room);
+            } else {
+                alert("Ne može se upisati datum ako je taj datum već zauzet");
+            }
         } else {
-            alert("Ne može se upisati datum ako je taj datum već zauzet");
+            alert("moraš")
         }
         clr.clearOlay();
     }

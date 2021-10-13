@@ -1,7 +1,5 @@
 var lStor = window.localStorage;
 class localData {
-    sDates = [];
-    eDates = [];
 
     save(inputData, room) {
         var apNum = parseInt(room.id.substring(1)) - 1;
@@ -28,9 +26,6 @@ class localData {
                 inputData[1] = lStor.getItem("departure" + i + j);
                 inputData[2] = lStor.getItem("name" + i + j);
                 inputData[3] = lStor.getItem("price" + i + j);
-                this.sDates.push(inputData[0]);
-                this.eDates.push(inputData[1]);
-                
                 clients.push(inputData);
                 rooms.push(floor1rooms[i]);
                 k++;
@@ -67,20 +62,27 @@ class localData {
         URL.revokeObjectURL(a.href);
     }
 
-    checkDate(startDate, endDate) {
+    checkDate(startDate, endDate, room) {
         var dateFlag = true;
-        for(var i = 0; i < this.sDates.length; i++) {
-            var start1 = Date.parse(startDate);
-            var start2 = Date.parse(this.sDates[i]);
-            var end1 = Date.parse(endDate);
-            var end2 = Date.parse(this.eDates[i]);
-            var startInside = ((start1 > start2) & (start1 < end2));
-            var endInside = ((end1 < end2) & (end1 > start2));
-            if(startInside || endInside) {
-                dateFlag = false;
+        var roomID = room.id.split("a")[1] - 1;
+        var roomCount = parseInt(lStor.getItem("count" + roomID));
+        var startD = new Date(startDate).getDate();
+        var endD = new Date(endDate).getDate();
+        for (var i = 0; i < roomCount; i++) {
+            var startDatabase = new Date(lStor.getItem("arrival" + roomID + i)).getDate();
+            var endDatabase = new Date(lStor.getItem("departure" + roomID + i)).getDate();
+            for (var j = startD; j <= endD; j++) {
+                var startInside = ((j > startDatabase) & (j < endDatabase));
+                var endInside = ((j < endDatabase) & (j > startDatabase));
+                if (startInside || endInside) {
+                    dateFlag = false;
+                    break;
+                } else {
+                    dateFlag = true;
+                }
+            }
+            if(dateFlag == false) {
                 break;
-            } else {
-                dateFlag = true;
             }
         }
 
